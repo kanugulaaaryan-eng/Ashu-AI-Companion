@@ -1,0 +1,13 @@
+# Ashu core has no mandatory third-party dependency.
+# The Python brain, tests and local bridge run on the stdlib alone.
+#
+# Optional extras (all lazy-imported, none required for the v0.4 test suite):
+#
+#   llama-cpp-python   # true in-process local GGUF inference + streaming
+#   onnxruntime        # alternative local runtime
+#   tokenizers         # required by the ONNX runtime path
+#   faster-whisper     # optional local speech-to-text
+#   pyttsx3            # optional development-machine text-to-speech
+#
+# Testing:
+#   pytest             # full suite (the v0.3 personality tests use pytest)
