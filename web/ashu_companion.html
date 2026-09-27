@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Ashu Companion</title>
+<style>
+:root{
+  --bg:#FCF8FA; --ink:#28232C; --pink:#E96586; --soft-pink:#FFE8EF;
+  --lilac:#EFE8FF; --mint:#E2F7E8; --card:#FFFFFF; --muted:#7A6E78;
+  --line:#EFE7EC; --yellow:#FFF4D6; --yellow-ink:#7A6320; --danger:#C94F4F;
+  --radius:20px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Telugu",sans-serif;
+  background:transparent; color:var(--ink); display:flex; align-items:center; justify-content:center;
+}
+#companion{
+  width:100%; height:100%; background:transparent;
+  display:flex; flex-direction:column; position:relative; overflow:hidden;
+}
+#chibi{
+  position:relative; width:100%; height:100%; max-width:140px; max-height:140px;
+  pointer-events:none; cursor:default;
+}
+#chibi img{
+  width:100%; height:100%; object-fit:contain;
+  animation:breathe 3.2s ease-in-out infinite;
+  transform-origin:50% 92%;
+  filter:drop-shadow(0 8px 10px rgba(120,60,90,.14));
+}
+@keyframes breathe{0%,100%{transform:scale(1) rotate(-1.4deg)}50%{transform:scale(1.035) rotate(1.4deg)}}
+@keyframes speakingPulse{0%,100%{transform:scale(1) rotate(-1deg)}50%{transform:scale(1.045) rotate(1deg)}}
+@keyframes replyPop{0%{transform:translateY(12px) scale(.9);opacity:.2}65%{transform:translateY(-4px) scale(1.04);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+#companion.speaking #chibi img{animation:speakingPulse .78s ease-in-out infinite}
+#companion.reply-pop #chibi img{animation:replyPop .48s cubic-bezier(.2,.85,.35,1.18)}
+@keyframes speakingPulse{0%,100%{transform:scale(1) rotate(-1deg)}50%{transform:scale(1.045) rotate(1deg)}}
+@keyframes replyPop{0%{transform:translateY(12px) scale(.9);opacity:.2}65%{transform:translateY(-4px) scale(1.04);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes breathe{0%,100%{transform:scale(1) rotate(-1.4deg)}50%{transform:scale(1.035) rotate(1.4deg)}}
+
+/* Status indicator */
+#status{
+  position:absolute; bottom:4px; left:50%; transform:translateX(-50%);
+  display:flex; gap:4px; padding:2px 6px;
+  background:rgba(255,255,255,.9); border-radius:999px;
+  font-size:8px; color:#7A6E78; font-weight:600;
+  backdrop-filter:blur(8px); border:1px solid rgba(233,101,134,.2);
+  white-space:nowrap; opacity:0; transition:opacity .2s;
+}
+#companion:hover #status, #companion:focus-within #status{opacity:1}
+#status .dot{width:6px;height:6px;border-radius:50%;background:#22C55E;animation:pulse 2s infinite}
+#companion.offline #status .dot{background:#EF4444}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #chibi img{animation:none !important}
+}
+</style>
+</head>
+<body>
+<div id="companion">
+  <div id="chibi">
+    <img id="chibi-img" alt="Ashu" src="ashu_v2_neutral.webp">
+  </div>
+  <div id="status"><span class="dot"></span><span id="status-text">Connecting...</span></div>
+</div>
+<script>
+// State management
+const S = {
+  bridgeUrl: "",
+  bridgeOnline: false,
+  mood: "calm",
+  speaking: false,
+  listening: false,
+  reducedMotion: false,
+  replyPulse: false,
+};
+
+// Asset mapping (same as main app)
+const ASHU_ASSETS = {
+  "ashu_v2_neutral": "ashu_v2_neutral.webp",
+  "ashu_v2_happy": "ashu_v2_happy.webp",
+  "ashu_v2_excited": "ashu_v2_excited.webp",
+  "ashu_v2_curious": "ashu_v2_curious.webp",
+  "ashu_v2_surprised": "ashu_v2_surprised.webp",
+  "ashu_v2_wink": "ashu_v2_wink.webp",
+  "ashu_emo_sad": "ashu_emo_sad.png",
+  "ashu_emo_sleepy": "ashu_emo_sleepy.png",
+  "ashu_emo_annoyed": "ashu_emo_annoyed.png",
+  "ashu_emo_excited": "ashu_emo_excited.png",
+  "ashu_emo_happy": "ashu_emo_happy.png",
+  "ashu_emo_calm": "ashu_emo_calm.png",
+  "ashu_emo_curious": "ashu_emo_curious.png",
+  "ashu_emo_surprised": "ashu_emo_surprised.png",
+  "ashu_emo_shy": "ashu_emo_shy.png",
+  "ashu_emo_wink": "ashu_emo_wink.png",
+  "ashu_emo_laughing": "ashu_emo_laughing.png",
+};
+
+const ACTION_ASSET = {
+  idle:"ashu_v2_neutral", wave:"ashu_v2_happy", thumbs_up:"ashu_v2_happy",
+  cross_arms:"ashu_v2_neutral", thinking:"ashu_v2_curious", celebrate:"ashu_v2_excited",
+  jump:"ashu_v2_excited", stretch:"ashu_v2_neutral", wake:"ashu_v2_neutral",
+  look_at_user:"ashu_v2_curious", nod:"ashu_v2_happy", bounce:"ashu_v2_happy",
+  laugh:"ashu_emo_laughing", giggle:"ashu_emo_laughing", blush:"ashu_emo_shy",
+  wink:"ashu_v2_wink", annoyed:"ashu_emo_annoyed", look_left:"ashu_emo_sad",
+  yawn:"ashu_emo_sleepy", sleep:"ashu_emo_sleepy", peek:"ashu_v2_curious",
+  hide:"ashu_emo_shy", shake_head:"ashu_emo_annoyed", thumbs_down:"ashu_emo_annoyed",
+  salute:"ashu_v2_neutral", shrug:"ashu_v2_curious", facepalm:"ashu_emo_annoyed",
+  look_right:"ashu_v2_curious", spin:"ashu_v2_excited", listening:"ashu_v2_curious",
+  speaking:"ashu_v2_happy", waiting:"ashu_v2_neutral", peek:"ashu_v2_curious",
+  hide:"ashu_emo_shy", salute:"ashu_v2_neutral", shrug:"ashu_v2_curious",
+  facepalm:"ashu_emo_annoyed", look_right:"ashu_v2_curious", spin:"ashu_v2_excited",
+  listening:"ashu_v2_curious", speaking:"ashu_v2_happy", waiting:"ashu_v2_neutral",
+};
+
+const MOOD_ASSET = {
+  happy:"ashu_v2_happy", sad:"ashu_emo_sad", sleepy:"ashu_emo_sleepy",
+  excited:"ashu_v2_excited", angry:"ashu_emo_annoyed", annoyed:"ashu_emo_annoyed",
+  jealous:"ashu_emo_annoyed", caring:"ashu_v2_calm", shy:"ashu_emo_shy",
+  thinking:"ashu_v2_curious", confused:"ashu_v2_curious", bored:"ashu_v2_neutral",
+  playful:"ashu_emo_laughing", flirty:"ashu_v2_wink", proud:"ashu_v2_neutral",
+  worried:"ashu_v2_curious", surprised:"ashu_v2_surprised", embarrassed:"ashu_emo_shy",
+  curious:"ashu_v2_curious", calm:"ashu_v2_neutral"
+};
+
+const ASHU_STATE_DIRECT = {
+  NEUTRAL:"ashu_v2_neutral", HAPPY:"ashu_v2_happy", EXCITED:"ashu_v2_excited",
+  WINK:"ashu_v2_wink", CURIOUS:"ashu_v2_curious", SURPRISED:"ashu_v2_surprised"
+};
+const ASHU_STATE_LEGACY_LEAF = { SAD:"ashu_emo_sad", SLEEPY:"ashu_emo_sleepy" };
+const ASHU_STATE_FALLBACK = {
+  LAUGHING:"EXCITED", PLAYFUL:"WINK", CONFUSED:"CURIOUS", THINKING:"CURIOUS",
+  SIDE_EYE:"ANNOYED", POUT:"ANNOYED", ANNOYED:"NEUTRAL", SARCASTIC:"ANNOYED",
+  TIRED:"SLEEPY", CONCERNED:"CARING", CARING:"NEUTRAL", EMBARRASSED:"SURPRISED",
+  PROUD:"HAPPY", TEASING:"PLAYFUL", LISTENING:"CURIOUS", SPEAKING:"HAPPY",
+  REACTING:"SURPRISED", BORED:"NEUTRAL", ATTENTION:"CURIOUS"
+};
+
+function resolveAsset(action){ 
+  if(action && action!=="idle" && ACTION_ASSET[action]) return ACTION_ASSET[action]; 
+  return MOOD_ASSET[(S.mood||"").toLowerCase()] || "ashu_v2_neutral"; 
+}
+
+function assetURI(name){ return name; }
+function ASSET(name){ return name; }
+
+const ASHU_STATE_DIRECT = {
+  NEUTRAL:"ashu_v2_neutral", HAPPY:"ashu_v2_happy", EXCITED:"ashu_v2_excited",
+  WINK:"ashu_v2_wink", CURIOUS:"ashu_v2_curious", SURPRISED:"ashu_v2_surprised"
+};
+const ASHU_STATE_LEGACY_LEAF = { SAD:"ashu_emo_sad", SLEEPY:"ashu_emo_sleepy" };
+const ASHU_STATE_FALLBACK = {
+  LAUGHING:"EXCITED", PLAYFUL:"WINK", CONFUSED:"CURIOUS", THINKING:"CURIOUS",
+  SIDE_EYE:"ANNOYED", POUT:"ANNOYED", ANNOYED:"NEUTRAL", SARCASTIC:"ANNOYED",
+  TIRED:"SLEEPY", CONCERNED:"CARING", CARING:"NEUTRAL", EMBARRASSED:"SURPRISED",
+  PROUD:"HAPPY", TEASING:"PLAYFUL", LISTENING:"CURIOUS", SPEAKING:"HAPPY",
+  REACTING:"SURPRISED", BORED:"NEUTRAL", ATTENTION:"CURIOUS"
+};
+
+function ashuAssetForState(state){
+  if(ASHU_STATE_DIRECT[state]) return ASHU_STATE_DIRECT[state];
+  if(ASHU_STATE_LEGACY_LEAF[state]) return ASHU_STATE_LEGACY_LEAF[state];
+  let cur=state, guard=0;
+  while(ASHU_STATE_FALLBACK[cur] && guard++<30){
+    cur=ASHU_STATE_FALLBACK[cur];
+    if(ASHU_STATE_DIRECT[cur]) return ASHU_STATE_DIRECT[cur];
+    if(ASHU_STATE_LEGACY_LEAF[cur]) return ASHU_STATE_LEGACY_LEAF[cur];
+  }
+  return "ashu_v2_neutral";
+}
+
+function ashuStateFromMood(mood){
+  const m=(mood||"").toLowerCase();
+  const table={happy:"HAPPY",sad:"SAD",sleepy:"SLEEPY",excited:"EXCITED",angry:"ANNOYED",
+    annoyed:"ANNOYED",jealous:"SIDE_EYE",caring:"CARING",shy:"EMBARRASSED",thinking:"THINKING",
+    confused:"CONFUSED",bored:"BORED",playful:"PLAYFUL",flirty:"WINK",proud:"PROUD",
+    worried:"CONCERNED",surprised:"SURPRISED",embarrassed:"EMBARRASSED",curious:"CURIOUS",calm:"NEUTRAL"};
+  return table[m]||"NEUTRAL";
+}
+
+function ashuEffectiveState(){
+  if(window.S && window.S.replyPulse) return "REACTING";
+  if(window.S && window.S.speaking) return "SPEAKING";
+  if(window.S && window.S.listening) return "LISTENING";
+  if(window.S && window.S.thinking) return "THINKING";
+  return ashuStateFromMood(window.S?.mood);
+}
+
+function ashuCurrentAsset(){ return assetURI(resolveAsset(window.S?.mood)); }
+
+function resolveAsset(mood, action){ 
+  if(action && action!=="idle" && ACTION_ASSET[action]) return ACTION_ASSET[action]; 
+  return MOOD_ASSET[(mood||"").toLowerCase()] || "ashu_v2_neutral"; 
+}
+
+function assetURI(name){ return ASHU_ASSETS[name] || ""; }
+function ASSET(name){ return ASHU_ASSETS[name] || ""; }
+
+const ACTION_EFFECTS = {
+  bounce:"bounce", spin:"spin", hide:"hide", shake:"shake",
+  jump:"bounce", spin:"spin", nod:"nod", shake_head:"shake",
+  thumbs_up:"thumbs_up", thumbs_down:"thumbs_down", salute:"salute",
+  shrug:"shrug", cross_arms:"cross_arms", facepalm:"facepalm",
+  blush:"blush", wink:"wink", laugh:"laugh", giggle:"giggle",
+  yawn:"yawn", stretch:"stretch", sleep:"sleep", wake:"wake",
+  look_left:"look_left", look_right:"look_right", look_at_user:"look_at_user",
+  jump:"jump", bounce:"bounce", spin:"spin", shy_hide:"hide",
+  annoyed:"shake", thinking:"thinking", celebrate:"celebrate",
+  listening:"listening", speaking:"speaking", waiting:"waiting",
+  peek:"peek", hide:"hide", salute:"salute", shrug:"shrug",
+  facepalm:"facepalm", look_right:"look_right", spin:"spin",
+  listening:"listening", speaking:"speaking", waiting:"waiting"
+};
+
+function playAction(action){
+  const c=document.getElementById('chibi-img');
+  if(!c) return;
+  const effect=ACTION_EFFECTS[action];
+  if(effect){
+    c.classList.add('act-'+effect);
+    setTimeout(()=>c.classList.remove('act-'+effect), 800);
+  }
+}
+
+function resolveAsset(action){ 
+  if(action && action!=="idle" && ACTION_ASSET[action]) return ACTION_ASSET[action]; 
+  return MOOD_ASSET[(S.mood||"").toLowerCase()] || "ashu_v2_neutral"; 
+}
+
+function assetURI(name){ return ASHU_ASSETS[name] || ""; }
+function ASSET(name){ return ASHU_ASSETS[name] || ""; }
+
+function updateChibi(){
+  const c=document.getElementById('chibi-img');
+  if(!c) return;
+  c.src = ASSET(ashuCurrentAsset());
+  document.getElementById('companion').classList.toggle('speaking', window.S?.speaking);
+  document.getElementById('companion').classList.toggle('reply-pop', window.S?.replyPulse);
+  document.getElementById('companion').classList.toggle('offline', !window.S?.bridgeOnline);
+}
+
+function setStatus(text, online){
+  document.getElementById('status-text').textContent = text;
+  document.getElementById('companion').classList.toggle('offline', !online);
+}
+
+async function checkBridge(){
+  try{
+    const resp = await fetch(S.bridgeUrl + '/v1/health');
+    if(resp.ok){
+      const data = await resp.json();
+      S.bridgeOnline = true;
+      S.mood = data.model?.cloud?.provider?.includes('nemotron') ? 'calm' : 'happy';
+      setStatus('Connected to ' + (data.model?.cloud?.provider || 'NIM'), true);
+      return true;
+    }
+  }catch(e){
+    S.bridgeOnline = false;
+    setStatus('Offline', false);
+  }
+  return false;
+}
+
+function setStatus(text, online){
+  document.getElementById('status-text').textContent = text;
+  document.getElementById('companion').classList.toggle('offline', !online);
+}
+
+// Drag functionality
+let dragging = false, offsetX = 0, offsetY = 0;
+const companion = document.getElementById('companion');
+const chibi = document.getElementById('chibi');
+
+companion.addEventListener('mousedown', (e) => {
+  dragging = true;
+  const rect = companion.getBoundingClientRect();
+  offsetX = e.clientX - rect.left;
+  offsetY = e.clientY - rect.top;
+  companion.style.cursor = 'grabbing';
+});
+
+window.addEventListener('mousemove', (e) => {
+  if(!dragging) return;
+  const x = e.clientX - offsetX;
+  const y = e.clientY - offsetY;
+  const maxX = window.innerWidth - companion.offsetWidth;
+  const maxY = window.innerHeight - companion.offsetHeight;
+  companion.style.left = Math.max(0, Math.min(x, window.innerWidth - 140)) + 'px';
+  companion.style.top = Math.max(0, Math.min(y, window.innerHeight - 140)) + 'px';
+});
+
+window.addEventListener('mouseup', () => {
+  dragging = false;
+  companion.style.cursor = 'grab';
+});
+
+companion.addEventListener('touchstart', (e) => {
+  const touch = e.touches[0];
+  dragging = true;
+  const rect = companion.getBoundingClientRect();
+  offsetX = touch.clientX - rect.left;
+  offsetY = touch.clientY - rect.top;
+}, {passive: true});
+
+window.addEventListener('touchmove', (e) => {
+  if(!dragging) return;
+  const touch = e.touches[0];
+  const x = touch.clientX - offsetX;
+  const y = touch.clientY - offsetY;
+  companion.style.left = Math.max(0, Math.min(x, window.innerWidth - 140)) + 'px';
+  companion.style.top = Math.max(0, Math.min(y, window.innerHeight - 140)) + 'px';
+}, {passive: true});
+
+window.addEventListener('touchend', () => {
+  dragging = false;
+});
+
+async function checkBridgePeriodically(){
+  await checkBridge();
+  updateChibi();
+  setTimeout(checkBridgePeriodically, 10000);
+}
+
+// Listen for state updates from main window
+window.addEventListener('message', (event) => {
+  if(event.data.type === 'ashu-state'){
+    window.S = {...window.S, ...event.data.state};
+    updateChibi();
+  }
+});
+
+// Initialize
+async function init(){
+  // Try to get bridge URL from main window
+  try{
+    if(window.opener && window.opener.S){
+      window.S = window.opener.S;
+      S.bridgeUrl = window.opener.S.bridgeUrl;
+    }
+  }catch(e){}
+
+  // Try to get from localStorage
+  try{
+    const stored = localStorage.getItem('ashu.proto.v1');
+    if(stored){
+      const state = JSON.parse(stored);
+      S.bridgeUrl = state.bridgeUrl || '';
+    }
+  }catch(e){}
+
+  // Try to get from query params
+  const urlParams = new URLSearchParams(window.location.search);
+  if(urlParams.get('bridge')){
+    S.bridgeUrl = urlParams.get('bridge');
+  }
+
+  updateChibi();
+  await checkBridge();
+  setInterval(checkBridgePeriodically, 10000);
+  updateChibi();
+}
+
+init();
+</script>
+</body>
+</html>

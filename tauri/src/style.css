@@ -1,0 +1,179 @@
+/* Tauri Desktop App Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --ashu-primary: #0F172A;
+  --ashu-primary-light: #1E293B;
+  --ashu-secondary: #0369A1;
+  --ashu-tertiary: #E96586;
+  --ashu-background: #F8FAFC;
+  --ashu-surface: #FFFFFF;
+  --ashu-surface-variant: #F1F5F9;
+  --ashu-on-background: #0F172A;
+  --ashu-on-surface: #0F172A;
+  --ashu-on-surface-variant: #475569;
+  --ashu-outline: #E2E8F0;
+  --ashu-success: #059669;
+  --ashu-error: #DC2626;
+  --ashu-warning: #D97706;
+}
+
+* {
+  font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background: var(--ashu-background);
+  color: var(--ashu-on-background);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Window frame (since we have decorations: false) */
+.window-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: var(--ashu-surface);
+  border-bottom: 1px solid var(--ashu-outline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  -webkit-app-region: drag;
+  z-index: 1000;
+}
+
+.window-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ashu-on-surface);
+}
+
+.window-controls {
+  display: flex;
+  gap: 4px;
+  -webkit-app-region: no-drag;
+}
+
+.window-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ashu-on-surface-variant);
+  transition: all 0.15s ease;
+}
+
+.window-btn:hover {
+  background: var(--ashu-surface-variant);
+  color: var(--ashu-on-surface);
+}
+
+.window-btn.close:hover {
+  background: var(--ashu-error);
+  color: white;
+}
+
+/* Bridge status bar */
+.bridge-status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--ashu-surface);
+  border-top: 1px solid var(--ashu-outline);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 11px;
+  z-index: 1000;
+}
+
+.bridge-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.bridge-status.running {
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--ashu-success);
+}
+
+.bridge-status.stopped {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--ashu-error);
+}
+
+.bridge-status .model {
+  font-weight: 500;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* Main content area */
+.main-content {
+  position: absolute;
+  top: 36px;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ashu-outline);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ashu-outline-variant);
+}
+
+/* Selection */
+::selection {
+  background: var(--ashu-tertiary);
+  color: white;
+}
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid var(--ashu-secondary);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

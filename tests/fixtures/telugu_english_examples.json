@@ -1,0 +1,62 @@
+{
+  "description": "Realistic Telugu-English code-switching conversation examples used to validate the language layer and the v0.4 personality contract.",
+  "notes": "Registers progress formal -> bestie. Ashu must stay Telugu-first, mix English naturally, and NEVER be flirty.",
+  "examples": [
+    {
+      "id": "greet_formal",
+      "stage": "formal",
+      "user": "Hello Ashu, ela unnav?",
+      "expected_language": "te",
+      "expect_any_terms": ["namaskaram", "ela", "hello", "hi", "santosham"],
+      "forbidden_terms": ["sweetheart", "baby", "kiss me"]
+    },
+    {
+      "id": "bored_tease",
+      "stage": "comfortable_friend",
+      "user": "Chala bore kodtundi ra",
+      "expected_language": "te",
+      "expect_any_terms": ["bore", "cheyyi", "chestha", "time", "pani"],
+      "forbidden_terms": ["i love you", "flirt"]
+    },
+    {
+      "id": "care_message",
+      "stage": "best_friend",
+      "user": "Naku chala tension ga undi, exam undi",
+      "expected_language": "te",
+      "expect_any_terms": ["tension", "exam", "kudirithe", "chestha", "nenu", "relax"],
+      "forbidden_terms": ["i love you", "baby"]
+    },
+    {
+      "id": "mixed_reply",
+      "stage": "acquaintance",
+      "user": "Em chestunav? Project deadline undi",
+      "expected_language": "mixed",
+      "expect_any_terms": ["project", "deadline", "chestha", "chestunna", "em"],
+      "forbidden_terms": ["honey", "sweetie"]
+    },
+    {
+      "id": "memory_command_recall",
+      "stage": "comfortable_friend",
+      "user": "Naku naa gurinchi em gurthu?",
+      "expected_language": "te",
+      "expect_any_terms": ["gurthu", "memory", "cheppu"],
+      "forbidden_terms": []
+    },
+    {
+      "id": "reminder_request",
+      "stage": "best_friend",
+      "user": "Remind me 10 minutes lo call cheyyali ani",
+      "expected_language": "mixed",
+      "expect_any_terms": ["remind", "10", "call", "chestha", "sare"],
+      "forbidden_terms": ["i love you"]
+    },
+    {
+      "id": "hindi_scaffold",
+      "stage": "acquaintance",
+      "user": "Kal milte hain",
+      "expected_language": "hi",
+      "expect_any_terms": ["sare", "kal", "okay"],
+      "forbidden_terms": []
+    }
+  ]
+}

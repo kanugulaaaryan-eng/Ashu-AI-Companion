@@ -1,0 +1,14 @@
+{
+  "name": "Ashu v0.9 Desktop Companion",
+  "short_name": "Ashu",
+  "start_url": "./ashu_prototype.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fef6fa",
+  "theme_color": "#e96586",
+  "description": "Local-first Telugu-English Ashu companion prototype.",
+  "icons": [
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

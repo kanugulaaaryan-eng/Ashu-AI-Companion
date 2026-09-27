@@ -1,0 +1,834 @@
+{
+  "pack": "Ashu 2D Character Asset Pack",
+  "version": "1.0.0",
+  "design_reference": {
+    "source_file": "ashu pics reference.png",
+    "description": "4\u00c3\u20146 grid design reference sheet (1536\u00c3\u20141024 RGB) showing 24 character poses/expressions",
+    "grid_dimensions": "4 rows \u00c3\u2014 6 columns",
+    "cell_size": "256\u00c3\u2014256",
+    "location": "docs/design/ashu_design_reference_sheet.png"
+  },
+  "character": {
+    "name": "Ashu",
+    "identity": "Original fictional young woman, visually 21-23, chaotic-caring phone companion",
+    "language": "Telugu + English (natural code-switch)",
+    "personality": [
+      "cute",
+      "expressive",
+      "slightly chaotic",
+      "playful",
+      "caring",
+      "mischievous",
+      "sarcastic",
+      "supportive"
+    ],
+    "visual_lock": {
+      "hair": "long wavy slightly-messy dark brown",
+      "skin": "warm light / fair",
+      "eyes": "large expressive dark brown",
+      "signature": "small dainty pink heart-shaped earring",
+      "palette": [
+        "peach",
+        "cream",
+        "soft pink",
+        "warm neutral"
+      ],
+      "outfit": "cropped cream ribbed top with pink bow, oversized cream cardigan, dusty-pink wide-leg cargo pants, cream/white chunky sneakers",
+      "style": "clean modern 2D animation cel, premium animated-series quality, crisp linework, soft cel shading, mild chibi facial exaggeration",
+      "never": [
+        "photorealistic",
+        "3D",
+        "glossy AI influencer art",
+        "overly anime",
+        "redesign between assets"
+      ]
+    }
+  },
+  "technical": {
+    "format": "PNG",
+    "colour_mode": "RGBA (alpha / transparent background)",
+    "canvas": "2048 x 2048",
+    "character_occupancy": "70-85% of canvas with transparent padding for animation",
+    "background": "fully transparent - no scene, no UI, no text, no speech bubbles",
+    "edge_treatment": "soft chroma key + despill, feathered alpha, clean render edges"
+  },
+  "folders": {
+    "portraits/": "22 bust expression states for chat & avatar rendering",
+    "voice/": "3 listening / speaking / reacting states for STT + TTS",
+    "floating/": "11 full-body states for the draggable on-screen companion",
+    "chat/": "3 compact low-detail avatars for chat bubbles and notifications",
+    "expressions/": "6 exaggerated movie-style reaction variants"
+  },
+  "totals": {
+    "planned": 45,
+    "delivered": 6,
+    "pending_credits": 39
+  },
+  "assets": [
+    {
+      "filename": "portraits/ashu_neutral.png",
+      "name": "ashu_neutral",
+      "category": "portraits",
+      "intended_ui_state": "Neutral resting face - default chat idle & avatar",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Core",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "delivered",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 0,
+        "cell_description": "Row 0, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_happy.png",
+      "name": "ashu_happy",
+      "category": "portraits",
+      "intended_ui_state": "Positive reply / warm acknowledgement",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Core",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "delivered",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 2,
+        "cell_description": "Row 0, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_excited.png",
+      "name": "ashu_excited",
+      "category": "portraits",
+      "intended_ui_state": "High-energy reaction, good news, hype",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Core",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "delivered",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 4,
+        "cell_description": "Row 0, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_laughing.png",
+      "name": "ashu_laughing",
+      "category": "portraits",
+      "intended_ui_state": "Joke landed / mid-laugh reaction",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Emotional range",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 4,
+        "cell_description": "Row 0, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_playful.png",
+      "name": "ashu_playful",
+      "category": "portraits",
+      "intended_ui_state": "Cheeky teasing reply, playful banter",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Signature",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 4,
+        "cell_description": "Row 1, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_wink.png",
+      "name": "ashu_wink",
+      "category": "portraits",
+      "intended_ui_state": "Flirty / affectionate acknowledgement, easter-egg reply",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Signature",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "delivered",
+      "design_reference": {
+        "grid_row": 3,
+        "grid_col": 2,
+        "cell_description": "Row 3, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_curious.png",
+      "name": "ashu_curious",
+      "category": "portraits",
+      "intended_ui_state": "User introduces something new, follow-up prompt",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Core",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "delivered",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 0,
+        "cell_description": "Row 1, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_surprised.png",
+      "name": "ashu_surprised",
+      "category": "portraits",
+      "intended_ui_state": "Unexpected news, shock beat",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Emotional range",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "delivered",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 2,
+        "cell_description": "Row 1, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_confused.png",
+      "name": "ashu_confused",
+      "category": "portraits",
+      "intended_ui_state": "Ambiguous user input, needs clarification",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Emotional range",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 0,
+        "cell_description": "Row 1, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_thinking.png",
+      "name": "ashu_thinking",
+      "category": "portraits",
+      "intended_ui_state": "Model is generating / processing spinner beat",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Utility",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 0,
+        "cell_description": "Row 1, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_side_eye.png",
+      "name": "ashu_side_eye",
+      "category": "portraits",
+      "intended_ui_state": "Suspicious / judging deadpan beat",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Signature",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 0,
+        "cell_description": "Row 2, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_pout.png",
+      "name": "ashu_pout",
+      "category": "portraits",
+      "intended_ui_state": "Mock-offended, playful sulk",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Emotional range",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 2,
+        "cell_description": "Row 2, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_annoyed.png",
+      "name": "ashu_annoyed",
+      "category": "portraits",
+      "intended_ui_state": "User is pushing it, mild irritation",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Signature",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 0,
+        "cell_description": "Row 2, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_sarcastic.png",
+      "name": "ashu_sarcastic",
+      "category": "portraits",
+      "intended_ui_state": "Snark / dry comeback",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Signature",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 2,
+        "cell_description": "Row 2, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_tired.png",
+      "name": "ashu_tired",
+      "category": "portraits",
+      "intended_ui_state": "Late-night chat, drained mood",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Emotional range",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 3,
+        "grid_col": 0,
+        "cell_description": "Row 3, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_sleepy.png",
+      "name": "ashu_sleepy",
+      "category": "portraits",
+      "intended_ui_state": "Bedtime, low-engagement idle, drowsy",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Signature",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 3,
+        "grid_col": 0,
+        "cell_description": "Row 3, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_concerned.png",
+      "name": "ashu_concerned",
+      "category": "portraits",
+      "intended_ui_state": "User sounds distressed, worry beat",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Care",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 3,
+        "cell_description": "Row 2, Col 3 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_caring.png",
+      "name": "ashu_caring",
+      "category": "portraits",
+      "intended_ui_state": "Comforting, supportive, reassurance reply",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Care",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 3,
+        "cell_description": "Row 2, Col 3 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_embarrassed.png",
+      "name": "ashu_embarrassed",
+      "category": "portraits",
+      "intended_ui_state": "Compliment received, flustered",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Emotional range",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 3,
+        "cell_description": "Row 1, Col 3 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_proud.png",
+      "name": "ashu_proud",
+      "category": "portraits",
+      "intended_ui_state": "Achievement, playful boasting",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Signature",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 5,
+        "cell_description": "Row 2, Col 5 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_teasing.png",
+      "name": "ashu_teasing",
+      "category": "portraits",
+      "intended_ui_state": "Flirty provocation, banter escalation",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Signature",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 4,
+        "cell_description": "Row 1, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "portraits/ashu_sad.png",
+      "name": "ashu_sad",
+      "category": "portraits",
+      "intended_ui_state": "Sad beat, low mood, gentle context",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Emotional range",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 3,
+        "grid_col": 4,
+        "cell_description": "Row 3, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "voice/ashu_listening.png",
+      "name": "ashu_listening",
+      "category": "voice",
+      "intended_ui_state": "Speech-to-text is active, waiting on the user",
+      "recommended_display_size": "192-512 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Voice",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 0,
+        "cell_description": "Row 1, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "voice/ashu_speaking.png",
+      "name": "ashu_speaking",
+      "category": "voice",
+      "intended_ui_state": "Text-to-speech is playing, mouth mid-talk",
+      "recommended_display_size": "192-512 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Voice",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 2,
+        "cell_description": "Row 0, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "voice/ashu_reacting.png",
+      "name": "ashu_reacting",
+      "category": "voice",
+      "intended_ui_state": "Just heard the user's message, first reaction beat",
+      "recommended_display_size": "192-512 px",
+      "asset_type": "portrait",
+      "expression_level": "subtle",
+      "tag": "Voice",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 2,
+        "cell_description": "Row 1, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_idle.png",
+      "name": "ashu_float_idle",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - resting idle",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 0,
+        "cell_description": "Row 0, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_peeking.png",
+      "name": "ashu_float_peeking",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - peeking from screen edge",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 0,
+        "cell_description": "Row 1, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_sitting.png",
+      "name": "ashu_float_sitting",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - perched on a screen edge",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 0,
+        "cell_description": "Row 0, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_moving.png",
+      "name": "ashu_float_moving",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - active drag / float motion",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 4,
+        "cell_description": "Row 0, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_sleeping.png",
+      "name": "ashu_float_sleeping",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - app idle / bedtime",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 3,
+        "grid_col": 0,
+        "cell_description": "Row 3, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_happy.png",
+      "name": "ashu_float_happy",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - happy notification beat",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 2,
+        "cell_description": "Row 0, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_excited.png",
+      "name": "ashu_float_excited",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - celebration / streak beat",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 4,
+        "cell_description": "Row 0, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_annoyed.png",
+      "name": "ashu_float_annoyed",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - poked too much / ignored",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 0,
+        "cell_description": "Row 2, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_curious.png",
+      "name": "ashu_float_curious",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - notices screen activity",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 0,
+        "cell_description": "Row 1, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_bored.png",
+      "name": "ashu_float_bored",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - long inactivity",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 3,
+        "grid_col": 0,
+        "cell_description": "Row 3, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "floating/ashu_float_attention.png",
+      "name": "ashu_float_attention",
+      "category": "floating",
+      "intended_ui_state": "Draggable overlay - 'hey, I'm here' nudge",
+      "recommended_display_size": "120-250 px",
+      "asset_type": "full-body",
+      "expression_level": "exaggerated",
+      "tag": "Overlay",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 3,
+        "grid_col": 5,
+        "cell_description": "Row 3, Col 5 of design reference sheet"
+      }
+    },
+    {
+      "filename": "chat/ashu_chat_idle.png",
+      "name": "ashu_chat_idle",
+      "category": "chat",
+      "intended_ui_state": "Compact chat-bubble avatar - idle",
+      "recommended_display_size": "40-96 px",
+      "asset_type": "portrait",
+      "expression_level": "compact",
+      "tag": "Chat UI",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 0,
+        "cell_description": "Row 0, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "chat/ashu_chat_happy.png",
+      "name": "ashu_chat_happy",
+      "category": "chat",
+      "intended_ui_state": "Compact chat-bubble avatar - happy",
+      "recommended_display_size": "40-96 px",
+      "asset_type": "portrait",
+      "expression_level": "compact",
+      "tag": "Chat UI",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 2,
+        "cell_description": "Row 0, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "chat/ashu_chat_annoyed.png",
+      "name": "ashu_chat_annoyed",
+      "category": "chat",
+      "intended_ui_state": "Compact chat-bubble avatar - annoyed",
+      "recommended_display_size": "40-96 px",
+      "asset_type": "portrait",
+      "expression_level": "compact",
+      "tag": "Chat UI",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 0,
+        "cell_description": "Row 2, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "expressions/ashu_expr_excited.png",
+      "name": "ashu_expr_excited",
+      "category": "expressions",
+      "intended_ui_state": "Exaggerated movie-style reaction - excited",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "exaggerated",
+      "tag": "Exaggerated",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 4,
+        "cell_description": "Row 0, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "expressions/ashu_expr_laughing.png",
+      "name": "ashu_expr_laughing",
+      "category": "expressions",
+      "intended_ui_state": "Exaggerated movie-style reaction - laughing",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "exaggerated",
+      "tag": "Exaggerated",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 0,
+        "grid_col": 4,
+        "cell_description": "Row 0, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "expressions/ashu_expr_surprised.png",
+      "name": "ashu_expr_surprised",
+      "category": "expressions",
+      "intended_ui_state": "Exaggerated movie-style reaction - surprised",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "exaggerated",
+      "tag": "Exaggerated",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 1,
+        "grid_col": 2,
+        "cell_description": "Row 1, Col 2 of design reference sheet"
+      }
+    },
+    {
+      "filename": "expressions/ashu_expr_annoyed.png",
+      "name": "ashu_expr_annoyed",
+      "category": "expressions",
+      "intended_ui_state": "Exaggerated movie-style reaction - annoyed",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "exaggerated",
+      "tag": "Exaggerated",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 0,
+        "cell_description": "Row 2, Col 0 of design reference sheet"
+      }
+    },
+    {
+      "filename": "expressions/ashu_expr_sad.png",
+      "name": "ashu_expr_sad",
+      "category": "expressions",
+      "intended_ui_state": "Exaggerated movie-style reaction - sad",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "exaggerated",
+      "tag": "Exaggerated",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 3,
+        "grid_col": 4,
+        "cell_description": "Row 3, Col 4 of design reference sheet"
+      }
+    },
+    {
+      "filename": "expressions/ashu_expr_proud.png",
+      "name": "ashu_expr_proud",
+      "category": "expressions",
+      "intended_ui_state": "Exaggerated movie-style reaction - proud",
+      "recommended_display_size": "256-1024 px",
+      "asset_type": "portrait",
+      "expression_level": "exaggerated",
+      "tag": "Exaggerated",
+      "canvas": "2048x2048 PNG, transparent RGBA",
+      "status": "pending_credits",
+      "design_reference": {
+        "grid_row": 2,
+        "grid_col": 5,
+        "cell_description": "Row 2, Col 5 of design reference sheet"
+      }
+    }
+  ]
+}

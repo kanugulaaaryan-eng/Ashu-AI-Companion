@@ -1,0 +1,20 @@
+{
+  "name": "ashu-desktop",
+  "version": "0.9.0",
+  "description": "Ashu AI Companion - Desktop App",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri:dev": "npx tauri dev --config src-tauri/tauri.conf.json",
+    "tauri:build": "npx tauri build --config src-tauri/tauri.conf.json"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "vite": "^5.0.0"
+  }
+}

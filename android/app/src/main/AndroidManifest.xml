@@ -1,0 +1,96 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Core -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Explicitly user-granted runtime permissions -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!--
+      v0.9 Part 8 (floating companion). SYSTEM_ALERT_WINDOW is a
+      special/"appears on top" permission Android will not grant from a
+      normal runtime prompt; FloatingCompanionPermission.request() always
+      sends the user to Android's own "Draw over other apps" settings
+      screen for this app, so the grant is explicit and user-driven, never
+      silent (see Part 8's "Do NOT silently request permissions").
+      FOREGROUND_SERVICE(_SPECIAL_USE) is required because the overlay is
+      hosted by a foreground Service (modern Android kills background
+      Services that try to touch WindowManager).
+    -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- Optional, individually explained in onboarding. Not requested by default. -->
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+
+    <!-- Android 11+ package visibility for speech recognition + opening apps -->
+    <queries>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Ashu"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+          Notification access is OFF unless the user enables it in Android
+          settings. The listener keeps only a short in-memory list and never
+          persists or uploads notification content.
+        -->
+        <service
+            android:name=".AshuNotificationListener"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!--
+          v0.9 Part 8. Off by default, only started by the "Floating Ashu"
+          switch in Settings (FloatingCompanionPermission.start()), and only
+          once SYSTEM_ALERT_WINDOW has been explicitly granted.
+        -->
+        <service
+            android:name=".FloatingCompanionService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="floating companion avatar the user explicitly turned on in Settings" />
+        </service>
+    </application>
+</manifest>
